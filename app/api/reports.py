@@ -3,7 +3,10 @@ from fastapi import APIRouter, Depends, Query, HTTPException, status
 from sqlalchemy.orm import Session
 from typing import List
 
-from app.database import get_db, time_entry_repository, task_repository
+from app.database import (
+    time_entry_repository,
+    task_repository
+)
 from app.database.models import User
 from app.schemas.time import (
     DailyReportResponse,
@@ -11,7 +14,7 @@ from app.schemas.time import (
     TaskTimeReportResponse,
     StatisticsResponse,
 )
-from app.core.deps import get_current_user
+from app.core.deps import get_db, get_current_user
 
 router = APIRouter(
     prefix="/reports",
@@ -28,16 +31,12 @@ def daily_report(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Báo cáo thời gian làm việc theo ngày
-    """
-
+    """Báo cáo thời gian làm việc theo ngày"""
     entries = time_entry_repository.get_by_user_and_date(
         db,
         user_id=current_user.id,
         report_date=report_date
     )
-
     total_seconds = sum(e.duration_seconds for e in entries)
 
     return DailyReportResponse(
@@ -58,10 +57,7 @@ def weekly_report(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Báo cáo thời gian làm việc theo tuần / khoảng ngày
-    """
-
+    """Báo cáo thời gian làm việc theo tuần / khoảng ngày"""
     if start_date > end_date:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -93,10 +89,7 @@ def report_by_task(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Báo cáo tổng thời gian theo từng task
-    """
-
+    """Báo cáo tổng thời gian theo từng task"""
     if start_date > end_date:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
@@ -130,7 +123,6 @@ def summary_statistics(
     - Số task
     - Trung bình / ngày
     """
-
     if start_date > end_date:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

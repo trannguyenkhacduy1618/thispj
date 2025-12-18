@@ -4,7 +4,6 @@ from sqlalchemy.orm import Session
 from typing import List, Optional
 
 from app.database import (
-    get_db,
     task_repository,
     user_repository,
     time_entry_repository,
@@ -17,7 +16,7 @@ from app.schemas.time import (
     DailyReportResponse,
     StatisticsResponse,
 )
-from app.core.deps import get_current_user
+from app.core.deps import get_db, get_current_user
 
 router = APIRouter(
     prefix="/time",
@@ -38,7 +37,6 @@ def start_timer(
     Bắt đầu bấm giờ cho 1 task
     - 1 user chỉ được chạy 1 timer tại 1 thời điểm
     """
-
     task = task_repository.get(db, payload.task_id)
     if not task:
         raise HTTPException(
@@ -85,10 +83,7 @@ def stop_timer(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Dừng stopwatch
-    """
-
+    """Dừng stopwatch"""
     entry = time_entry_repository.get_running_by_user(
         db,
         current_user.id
@@ -124,9 +119,7 @@ def get_running_timer(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Lấy timer đang chạy (frontend polling)
-    """
+    """Lấy timer đang chạy (frontend polling)"""
     entry = time_entry_repository.get_running_by_user(
         db,
         current_user.id
@@ -148,9 +141,7 @@ def daily_report(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Báo cáo thời gian làm việc theo ngày
-    """
+    """Báo cáo thời gian làm việc theo ngày"""
     entries = time_entry_repository.get_by_user_and_date(
         db,
         user_id=current_user.id,
@@ -182,7 +173,6 @@ def statistics(
     - Theo task
     - Theo ngày
     """
-
     if start_date > end_date:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

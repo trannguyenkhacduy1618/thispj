@@ -36,7 +36,7 @@ class User(Base):
 
     boards = relationship("Board", back_populates="owner")
     tasks = relationship("Task", back_populates="assigned_user")
-    time_entries = relationship("TimeTracking", back_populates="user")
+    time_entries = relationship("TimeEntry", back_populates="user")
 
 # ====================
 # BOARD
@@ -75,20 +75,21 @@ class Task(Base):
 
     board = relationship("Board", back_populates="tasks")
     assigned_user = relationship("User", back_populates="tasks")
-    time_entries = relationship("TimeTracking", back_populates="task")
+    time_entries = relationship("TimeEntry", back_populates="task")
 
 # ====================
-# TIME TRACKING
+# TIME ENTRY
 # ====================
-class TimeTracking(Base):
-    __tablename__ = "time_tracking"
+class TimeEntry(Base):
+    __tablename__ = "time_entries"
 
     id = Column(Integer, primary_key=True, index=True)
     task_id = Column(Integer, ForeignKey("tasks.id"))
     user_id = Column(Integer, ForeignKey("users.id"))
-    start_time = Column(DateTime, nullable=False)
-    end_time = Column(DateTime, nullable=True)  # None nếu đang chạy
-    duration_seconds = Column(Integer, nullable=True)  # total seconds
+    started_at = Column(DateTime, nullable=False)
+    stopped_at = Column(DateTime, nullable=True)  # None nếu đang chạy
+    duration_seconds = Column(Integer, nullable=True)  # tổng số giây
+    note = Column(Text, nullable=True)
 
     task = relationship("Task", back_populates="time_entries")
     user = relationship("User", back_populates="time_entries")

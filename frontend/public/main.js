@@ -1,6 +1,9 @@
+import '../public/styles.css';
+
 // ==== Stopwatch Logic ====
 let timerInterval = null;
 let elapsedSeconds = 0;
+
 const timerDisplay = document.getElementById("timer");
 const startStopBtn = document.getElementById("startStopBtn");
 const resetBtn = document.getElementById("resetBtn");

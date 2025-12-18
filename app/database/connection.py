@@ -4,7 +4,7 @@ from app.core.config import settings
 
 # Tạo engine
 engine = create_engine(
-    settings.database_url,
+    settings.DATABASE_URL,   # dùng đúng tên biến trong Settings
     pool_pre_ping=True,
     future=True,  # SQLAlchemy 2.0 style
 )

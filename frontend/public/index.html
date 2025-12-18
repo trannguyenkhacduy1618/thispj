@@ -1,14 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Time Tracker App</title>
-  <link rel="icon" href="/favicon.ico" />
-  <link rel="stylesheet" href="/styles.css" />
-</head>
-<body>
-  <div id="root"></div>
-  <script src="/main.js"></script>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Time Tracker App</title>
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <h1>Stopwatch</h1>
+    <div id="timer">00:00:00</div>
+    <button id="startStopBtn">Start</button>
+    <button id="resetBtn">Reset</button>
+
+    <h2>Daily Report</h2>
+    <ul id="dailyTasks"></ul>
+
+    <h2>Statistics</h2>
+    <div id="statsContent"></div>
+
+    <!-- Vite yêu cầu type="module" -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
 </html>

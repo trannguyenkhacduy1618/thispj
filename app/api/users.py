@@ -7,9 +7,10 @@ from app.schemas.user import (
     UserUpdate,
     PasswordChange
 )
-from app.database import get_db, user_repository
+from app.database import user_repository
 from app.database.models import User
 from app.core.deps import (
+    get_db,
     get_current_user,
     get_current_admin_user
 )
@@ -26,9 +27,7 @@ router = APIRouter(prefix="/users", tags=["users"])
 def get_current_user_profile(
     current_user: User = Depends(get_current_user)
 ):
-    """
-    Lấy thông tin user hiện tại
-    """
+    """Lấy thông tin user hiện tại"""
     return UserResponse.from_orm(current_user)
 
 
@@ -38,10 +37,7 @@ def update_current_user(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Cập nhật thông tin cá nhân
-    - Không cho user thường đổi role
-    """
+    """Cập nhật thông tin cá nhân - không cho user thường đổi role"""
     update_data = user_update.dict(exclude_unset=True)
 
     if "role" in update_data and current_user.role != "admin":
@@ -64,7 +60,6 @@ def update_current_user(
         db_obj=current_user,
         obj_in=update_data
     )
-
     return UserResponse.from_orm(updated_user)
 
 
@@ -74,9 +69,7 @@ def change_password(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Đổi mật khẩu user hiện tại
-    """
+    """Đổi mật khẩu user hiện tại"""
     if not verify_password(
         password_change.current_password,
         current_user.password_hash
@@ -91,7 +84,6 @@ def change_password(
         current_user,
         password_change.new_password
     )
-
     return {"message": "Đổi mật khẩu thành công"}
 
 
@@ -106,11 +98,7 @@ def get_all_users(
     current_user: User = Depends(get_current_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Lấy danh sách users
-    - Dùng cho assign task
-    - Dùng cho thống kê time tracking
-    """
+    """Lấy danh sách users - dùng cho assign task và thống kê"""
     users = user_repository.get_multi(
         db,
         skip=skip,
@@ -129,16 +117,13 @@ def get_user_by_id(
     admin_user: User = Depends(get_current_admin_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Admin lấy thông tin user bất kỳ
-    """
+    """Admin lấy thông tin user bất kỳ"""
     user = user_repository.get(db, user_id)
     if not user:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="User không tồn tại"
         )
-
     return UserResponse.from_orm(user)
 
 
@@ -149,12 +134,7 @@ def admin_update_user(
     admin_user: User = Depends(get_current_admin_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Admin cập nhật user:
-    - role
-    - is_active
-    - email
-    """
+    """Admin cập nhật user: role, is_active, email"""
     user = user_repository.get(db, user_id)
     if not user:
         raise HTTPException(
@@ -178,7 +158,6 @@ def admin_update_user(
         db_obj=user,
         obj_in=update_data
     )
-
     return UserResponse.from_orm(updated_user)
 
 
@@ -188,9 +167,7 @@ def admin_delete_user(
     admin_user: User = Depends(get_current_admin_user),
     db: Session = Depends(get_db)
 ):
-    """
-    Admin xóa user
-    """
+    """Admin xóa user"""
     user = user_repository.get(db, user_id)
     if not user:
         raise HTTPException(
@@ -205,7 +182,6 @@ def admin_delete_user(
         )
 
     user_repository.delete(db, id=user_id)
-
     return {
         "message": f"Đã xóa user {user.username}",
         "deleted_user_id": user_id

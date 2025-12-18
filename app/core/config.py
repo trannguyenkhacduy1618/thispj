@@ -3,25 +3,26 @@ from typing import List
 
 
 class Settings(BaseSettings):
-PROJECT_NAME: str = "Time Tracking Backend"
+    PROJECT_NAME: str = "Time Tracking Backend"
 
+    # Security
+    SECRET_KEY: str = "CHANGE_ME"
+    ALGORITHM: str = "HS256"
+    ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
 
-# Security
-SECRET_KEY: str = "CHANGE_ME"
-ALGORITHM: str = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES: int = 60 * 24
+    # Database
+    DATABASE_URL: str
 
+    # CORS
+    BACKEND_CORS_ORIGINS: List[str] = ["*"]
 
-# Database
-DATABASE_URL: str
+    # Extra fields from .env
+    APP_ENV: str = "development"
+    DEBUG: bool = True
+    PORT: int = 8000
 
-
-# CORS
-BACKEND_CORS_ORIGINS: List[str] = ["*"]
-
-
-class Config:
-env_file = ".env"
+    class Config:
+        env_file = ".env"
 
 
 settings = Settings()
