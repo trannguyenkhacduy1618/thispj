@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Time Tracker App</title>
+  <link rel="icon" href="/favicon.ico" />
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <header>
+    <h1>Time Tracker App</h1>
+  </header>
+
+  <main>
+    <section id="stopwatch">
+      <h2>Stopwatch</h2>
+      <div id="timer">00:00:00</div>
+      <button id="startStopBtn">Start</button>
+      <button id="resetBtn">Reset</button>
+    </section>
+
+    <section id="daily-report">
+      <h2>Daily Report</h2>
+      <ul id="dailyTasks"></ul>
+    </section>
+
+    <section id="statistics">
+      <h2>Statistics</h2>
+      <div id="statsContent">No data yet</div>
+    </section>
+  </main>
+
+  <footer>
+    <p>&copy; 2025 Time Tracker</p>
+  </footer>
+
+  <script src="/main.js"></script>
+</body>
+</html>

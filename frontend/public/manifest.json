@@ -1,0 +1,27 @@
+{
+  "name": "Time Tracker",
+  "short_name": "TimeTracker",
+  "description": "Ứng dụng theo dõi thời gian làm việc trên các task, báo cáo và thống kê.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4CAF50",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "32x32 16x16",
+      "type": "image/x-icon"
+    },
+    {
+      "src": "/icons/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icons/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

@@ -1,0 +1,48 @@
+/* src/styles/task.css */
+
+.task-card {
+    background: white;
+    padding: 16px;
+    border-radius: 10px;
+    margin-bottom: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
+}
+
+.task-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.task-title {
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.task-meta {
+    font-size: 13px;
+    color: #666;
+    margin-top: 6px;
+}
+
+.task-priority {
+    padding: 4px 8px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.priority-low {
+    background: #e0f2fe;
+    color: #0369a1;
+}
+
+.priority-medium {
+    background: #fef3c7;
+    color: #92400e;
+}
+
+.priority-high {
+    background: #fee2e2;
+    color: #991b1b;
+}

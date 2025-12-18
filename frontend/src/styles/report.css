@@ -1,0 +1,34 @@
+/* src/styles/report.css */
+
+.report-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.report-table th,
+.report-table td {
+    padding: 12px 14px;
+    text-align: left;
+}
+
+.report-table thead {
+    background-color: #4f46e5;
+    color: white;
+}
+
+.report-table tbody tr:nth-child(even) {
+    background-color: #f9fafb;
+}
+
+.report-table tbody tr:hover {
+    background-color: #eef2ff;
+}
+
+.report-total {
+    font-weight: bold;
+    color: #111827;
+}
